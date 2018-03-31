@@ -97,6 +97,11 @@ public class EarMusicGUI extends javax.swing.JFrame {
         brandTypeLabel.setText("Brand Type: ");
 
         brandTypeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select One", "Beats", "Bose", "JBL", "Skull Candy" }));
+        brandTypeCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                brandTypeComboActionPerformed(evt);
+            }
+        });
 
         submitBt.setText("Submit");
 
@@ -272,6 +277,40 @@ public class EarMusicGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void brandTypeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brandTypeComboActionPerformed
+        System.out.println("item selected");
+        		
+		if(brandTypeCombo.getSelectedItem().equals("Select One")){
+			wirelessTypeCombo.setEnabled(true);
+			microphoneTypeCombo.setEnabled(true);
+			wirelessTypeCombo.setSelectedIndex(0);
+			microphoneTypeCombo.setSelectedIndex(0);
+			headsetTypeCombo.setEnabled(true);
+			headsetTypeCombo.setSelectedIndex(0);			
+		} // end if (no selection made
+		else{
+			if(brandTypeCombo.getSelectedItem().equals("Bose")){
+				System.out.println("Bose brand selected");
+			wirelessTypeCombo.setEnabled(false);
+			microphoneTypeCombo.setEnabled(false);
+			wirelessTypeCombo.setSelectedIndex(2);
+			microphoneTypeCombo.setSelectedIndex(2);
+			headsetTypeCombo.setEnabled(true);
+			headsetTypeCombo.setSelectedIndex(0);
+			} // end if (intensive care room)
+		else{
+				System.out.println("other type brand selected");
+			wirelessTypeCombo.setEnabled(true);
+			microphoneTypeCombo.setEnabled(true);
+			wirelessTypeCombo.setSelectedIndex(0);
+			microphoneTypeCombo.setSelectedIndex(0);
+			headsetTypeCombo.setEnabled(true);
+			headsetTypeCombo.setSelectedIndex(0);
+			} // end else (not intensive care room)
+		} // end else a room selection has been made
+        
+    }//GEN-LAST:event_brandTypeComboActionPerformed
 
     /**
      * @param args the command line arguments

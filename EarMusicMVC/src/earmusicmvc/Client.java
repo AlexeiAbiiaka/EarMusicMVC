@@ -144,11 +144,14 @@ public class Client
      public int getWirelessCost(){
          int wirelessCost = 0;
          
-         if(wirelessType == 'X')
-             wirelessCost = 0;
-         else
-              wirelessCost = wirelessRate;
-             
+         switch (wirelessType) {
+             case 'I':
+                 wirelessCost = wirelessRate;
+                 break;
+             default:
+                 wirelessCost = noneWirelessRate;
+                 break;
+         }
          return wirelessCost;
      } // end get tv cost
      
@@ -160,11 +163,14 @@ public class Client
      public int getmicrophoneCost(){
          int microphoneCost = 0;
          
-         if(microphoneType == 'X')
-             microphoneCost = 0;
-         else
-              microphoneCost = microphoneRate;
-             
+         switch (microphoneType) {
+             case 'I':
+                 microphoneCost = microphoneRate;
+                 break;
+             default:
+                 microphoneCost = noneMicrophoneRate;
+                 break;
+         }
          return microphoneCost;
      } // end get phone cost
      
