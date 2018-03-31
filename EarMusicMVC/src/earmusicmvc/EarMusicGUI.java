@@ -5,6 +5,9 @@
  */
 package earmusicmvc;
 
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author abiiaka
@@ -17,6 +20,9 @@ public class EarMusicGUI extends javax.swing.JFrame {
     public EarMusicGUI() {
         initComponents();
     }
+    
+    	private Controller c;		// pointer to the controller
+	protected DefaultListModel clientListModel = new DefaultListModel();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,6 +46,7 @@ public class EarMusicGUI extends javax.swing.JFrame {
         buttonGroup4 = new javax.swing.ButtonGroup();
         jCheckBox4 = new javax.swing.JCheckBox();
         jProgressBar2 = new javax.swing.JProgressBar();
+        jProgressBar3 = new javax.swing.JProgressBar();
         jPanel1 = new javax.swing.JPanel();
         firstNameLabel = new javax.swing.JLabel();
         firstNameTxt = new javax.swing.JTextField();
@@ -104,8 +111,18 @@ public class EarMusicGUI extends javax.swing.JFrame {
         });
 
         submitBt.setText("Submit");
+        submitBt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitBtActionPerformed(evt);
+            }
+        });
 
         clearBt.setText("Clear");
+        clearBt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearBtActionPerformed(evt);
+            }
+        });
 
         microphoneTypeLabel.setText("Microphone Type: ");
 
@@ -312,6 +329,124 @@ public class EarMusicGUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_brandTypeComboActionPerformed
 
+    private void clearBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtActionPerformed
+        System.out.println("clear button clicked");
+        resetIn();
+    }//GEN-LAST:event_clearBtActionPerformed
+
+    private void submitBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtActionPerformed
+         System.out.println("submit button clicked");
+         String firstName = firstNameTxt.getText();
+		String lastName = lastNameTxt.getText();
+
+		char brandType = getBrandType();
+		char headsetType = getHeadsetType();
+		char wirelessType = getWirelessType();
+		char microphoneType = getMicrophoneType();
+		
+		System.out.println("first name: " + firstName);
+		System.out.println("last name: " + lastName);
+
+		resetIn();
+		
+		c.submitButtonClicked(firstName, lastName, brandType, headsetType, wirelessType, microphoneType);
+         
+    }//GEN-LAST:event_submitBtActionPerformed
+
+    	protected void loadClientListModel(ArrayList<Client> list){
+		for(Client cl: list)
+			clientListModel.addElement(cl);
+		
+		
+		c.loadListButtonClicked(list.get(list.size() - 1));
+		
+	} // end loadClientListModel
+        
+    	private void resetIn(){
+		firstNameTxt.setText("");
+		lastNameTxt.setText("");
+		
+		brandTypeCombo.setSelectedIndex(0);
+		headsetTypeCombo.setSelectedIndex(0);
+		wirelessTypeCombo.setSelectedIndex(0);
+		microphoneTypeCombo.setSelectedIndex(0);
+		
+		firstNameTxt.requestFocus();
+	} // end reSetInputs()
+    
+        private char getBrandType(){
+		System.out.println("getBrandType open");
+		
+		char bt = 'X';		// temp brand type code
+		
+		        if(brandTypeCombo.getSelectedItem().toString().equals("Beats")){
+			        bt = 'B';
+		} // end if (Beats)
+		else{
+			if(brandTypeCombo.getSelectedItem().toString().equals("Bose"))
+				bt = 'O';
+                } // end if (Bose)
+                
+                        if(brandTypeCombo.getSelectedItem().toString().equals("JBL")){
+				bt = 'J';			
+		} // end else (JBL)
+                else{
+                        if(brandTypeCombo.getSelectedItem().toString().equals("Skull Candy"))
+                                bt = 'O';
+                else
+                                bt = 'D';			
+                } // end else (Skull Candy)
+		return bt;
+	} // end getBrandTyoe
+	
+	private char getHeadsetType(){
+		char ht = 'X';
+		
+		        if(headsetTypeCombo.getSelectedItem().toString().equalsIgnoreCase("Headphones"))
+			ht = 'H';
+		else
+			if(headsetTypeCombo.getSelectedItem().toString().equalsIgnoreCase("Earbuds"))
+				ht = 'E';
+		else
+				ht = 'S';
+		
+		System.out.println("getHeadsetType open");
+		return ht;
+	} // end getHeadsetType
+
+	private char getWirelessType(){
+		char wt = 'Z';
+		
+		    if(wirelessTypeCombo.getSelectedItem().toString().equalsIgnoreCase("Wireless"))
+			wt = 'W';
+		else
+                    if(wirelessTypeCombo.getSelectedItem().toString().equalsIgnoreCase("Not Wireless"))
+			wt = 'N';
+                else
+                        wt = 'P';
+		
+		System.out.println("getWirelessType open");
+		return wt;
+	} // end getWirelessType
+
+	private char getMicrophoneType(){
+		char mt = 'Z';
+		
+		System.out.println("getMicrophoneType open");
+		
+		if(microphoneTypeCombo.getSelectedItem().toString().equalsIgnoreCase("Microphone"))
+			mt = 'M';
+		else
+                    if(microphoneTypeCombo.getSelectedItem().toString().equalsIgnoreCase("No Microphone"))
+			mt = 'N';
+                else
+                        mt = 'L';
+		
+		return mt;
+	} // end getMicrophoneType
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -371,6 +506,7 @@ public class EarMusicGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JProgressBar jProgressBar2;
+    private javax.swing.JProgressBar jProgressBar3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSlider jSlider1;

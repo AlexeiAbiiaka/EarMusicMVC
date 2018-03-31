@@ -58,6 +58,8 @@
     </Component>
     <Component class="javax.swing.JProgressBar" name="jProgressBar2">
     </Component>
+    <Component class="javax.swing.JProgressBar" name="jProgressBar3">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -280,11 +282,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Submit"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="submitBtActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="clearBt">
           <Properties>
             <Property name="text" type="java.lang.String" value="Clear"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearBtActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="microphoneTypeLabel">
           <Properties>
