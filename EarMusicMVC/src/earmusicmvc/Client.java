@@ -43,15 +43,196 @@ public class Client
         private String firstName;
         private String lastName;
         
+        private int id = 0;    
+        
         private char brandType;
         private char headsetType;
         private char wirelessType;
         private char microphoneType;
  	
  	// ********** constructors ***********
+        
+         public Client(){
+         id = nextID++;                                     // assign id and increment global next id value
+         
+         brandType = 'X';
+         headsetType = 'X';
+         wirelessType = 'X';
+         microphoneType = 'X';
+         
+         System.out.println("creating new client.");
+        } // end default construcor
  	
+             
+        public Client(String fn,                 // first name
+                      String ln,                 // last name
+                      char bt,                   // brand type
+                      char ht,                   // headset type
+                      char wt,                   // wireless type
+                      char mt){                  // microphone type
+         firstName = fn;
+         lastName = ln;
+         
+         id = nextID++;          // assign id and increment global next id value      
+         brandType = bt;
+         headsetType = ht;
+         wirelessType = wt;
+         microphoneType = mt;
+         
+         System.out.println("creating new client.");         
+        } // end initialized constructor 
  	// ********** accessors **********
- 	
- 	// ********** mutators **********
- 
+        
+           //*****************************************************
+    // Purpose: get the clients id number
+    // Interface: IN: na
+    // Returns: id
+    // *****************************************************   
+     public int getId(){
+         return id;
+     } // end getId
+     
+    //*****************************************************
+    // Purpose: calculate and return the cost of type of headset
+    // Interface: IN: na
+    // Returns: headset cost
+    // *****************************************************   
+     public int getHeadsetCost(){
+         int headsetCost = 0;
+         
+         switch (headsetType) {
+             case 'I':
+                 headsetCost = headphonesHeadset;
+                 break;
+             default:
+                 headsetCost = earbudsHeadset;
+                 break;
+         }
+         return headsetCost;
+     } // end get headset cost
+     
+    //*****************************************************
+    // Purpose: calculate and return the brand cost
+    // Interface: IN: na
+    // Returns: brand cost
+    // *****************************************************   
+     public int getBrandCost(){
+         int brandCost = 0;
+         
+         switch (brandType) {
+             case 'X':
+                 brandCost = beatsRate;
+                 break;
+             case 'N':
+                 brandCost = boseRate;
+                 break;
+             case 'V':
+                 brandCost = jblRate;
+                 break;
+             default:
+                 brandCost = boseRate;
+                 break;
+         }
+         return brandCost;
+     } // end get brand cost
+     
+    //*****************************************************
+    // Purpose: calculate and return the cost of wireless
+    // Interface: IN: na
+    // Returns: wirless cost
+    // *****************************************************   
+     public int getWirelessCost(){
+         int wirelessCost = 0;
+         
+         if(wirelessType == 'X')
+             wirelessCost = 0;
+         else
+              wirelessCost = wirelessRate;
+             
+         return wirelessCost;
+     } // end get tv cost
+     
+    //*****************************************************
+    // Purpose: calculate and return the cost of microphone
+    // Interface: IN: na
+    // Returns: microphone cost
+    // *****************************************************   
+     public int getmicrophoneCost(){
+         int microphoneCost = 0;
+         
+         if(microphoneType == 'X')
+             microphoneCost = 0;
+         else
+              microphoneCost = microphoneRate;
+             
+         return microphoneCost;
+     } // end get phone cost
+     
+    //*****************************************************
+    // Purpose: calculate and return the total cost
+    // Interface: IN: na
+    // Returns: total cost
+    // *****************************************************
+     public int getTotalCost(){
+        return this.brandType + this.headsetType + this.microphoneType + this.wirelessType;
+     } // end get total bill
+     
+    // *****************************************************   
+     
+    // ********** mutators **********
+     
+    //*****************************************************
+    // Purpose: change the headset type code for a client
+    // Interface: IN: new headset type code
+    // Returns: na
+    // *****************************************************
+     public void setHeadsetType(char ht){
+        headsetType = ht;
+     } // end set headset type
+     
+    //*****************************************************
+    // Purpose: change the brand type code for a client
+    // Interface: IN: new brand type code
+    // Returns: na
+    // *****************************************************
+     public void setBrandType(char bt){
+        brandType = bt;
+     } // end set brand type    
+     
+    //*****************************************************
+    // Purpose: change the wireless type code for a client
+    // Interface: IN: new wireless type code
+    // Returns: na
+    // *****************************************************
+     public void setWirelessType(char wt){
+        wirelessType = wt;
+     } // end set wireless type
+     
+    //*****************************************************
+    // Purpose: change the microphone type code for a client
+    // Interface: IN: new microphone type code
+    // Returns: na
+    // *****************************************************
+     public void setMicrophoneType(char mt){
+        microphoneType = mt;
+     } // end set microphone type
+     
+    //*****************************************************
+    // Purpose: set next id to last loaded client id + 1
+    // Interface: IN: new next id number
+    // Returns: na
+    // *****************************************************
+     public void setNextId(int n){
+        nextID = n;
+     } // end set NextId type 
+     
+//*****************************************************
+// Purpose: override the toString method
+// Interface: IN: na
+// Returns: formatted output
+// *****************************************************
+     public String toString(){
+            String strout = "ID: " + id + " " + headsetType +  " " + brandType +  " " + wirelessType +  " " + microphoneType;
+         return strout;
+     } // end getHeadsetCost
  }  // end class

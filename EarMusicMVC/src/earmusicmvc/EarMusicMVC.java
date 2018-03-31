@@ -59,6 +59,9 @@ public class EarMusicMVC {  // begin class
     	
     // ************************ processing ***************************
 	
+    EarMusicGUI earMusicGUI = new EarMusicGUI();
+    earMusicGUI.setVisible(true);
+    
 
  
     // ************************ print output ****************************
