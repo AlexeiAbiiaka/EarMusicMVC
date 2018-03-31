@@ -7,13 +7,16 @@ package earmusicmvc;
 
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
-
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author abiiaka
  */
 public class EarMusicGUI extends javax.swing.JFrame {
-
+    
+   	private Controller c;		// pointer to the controller
+	protected DefaultListModel clientListModel = new DefaultListModel();
+	protected ClientTableModel clientDetailModel = new ClientTableModel();
     /**
      * Creates new form EarMusicGUI
      */
@@ -21,8 +24,7 @@ public class EarMusicGUI extends javax.swing.JFrame {
         initComponents();
     }
     
-    	private Controller c;		// pointer to the controller
-	protected DefaultListModel clientListModel = new DefaultListModel();
+ 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,15 +65,15 @@ public class EarMusicGUI extends javax.swing.JFrame {
         microphoneTypeLabel = new javax.swing.JLabel();
         microphoneTypeCombo = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
         clientInformationLabel = new javax.swing.JLabel();
         saveListBt = new javax.swing.JButton();
         loadListBt = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        clientList = new javax.swing.JList<>();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         clientDetailLabel = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        clientDetailTable = new javax.swing.JTable();
 
         jCheckBox1.setText("jCheckBox1");
 
@@ -189,15 +191,29 @@ public class EarMusicGUI extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.lightGray, java.awt.Color.gray), javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, java.awt.Color.darkGray, java.awt.Color.darkGray)));
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
-
         clientInformationLabel.setText("Client Information");
 
         saveListBt.setText("Save List");
+        saveListBt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveListBtActionPerformed(evt);
+            }
+        });
 
         loadListBt.setText("Load List");
+        loadListBt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadListBtActionPerformed(evt);
+            }
+        });
+
+        clientList.setModel(clientListModel);
+        clientList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                clientListValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(clientList);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -206,15 +222,12 @@ public class EarMusicGUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(39, Short.MAX_VALUE)
+                        .addContainerGap()
                         .addComponent(clientInformationLabel))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(saveListBt)
-                            .addComponent(loadListBt))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(saveListBt)
+                    .addComponent(loadListBt))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -223,11 +236,11 @@ public class EarMusicGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(clientInformationLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(saveListBt)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(loadListBt)
@@ -236,21 +249,22 @@ public class EarMusicGUI extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.lightGray, java.awt.Color.gray), javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, null, java.awt.Color.darkGray, java.awt.Color.darkGray)));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
         clientDetailLabel.setText("Client Detail");
+
+        jScrollPane3.setBackground(new java.awt.Color(255, 102, 0));
+
+        clientDetailTable.setModel(clientDetailModel);
+        jScrollPane3.setViewportView(clientDetailTable);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(43, 43, 43)
                 .addComponent(clientDetailLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -258,11 +272,9 @@ public class EarMusicGUI extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(clientDetailLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(clientDetailLabel))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -272,24 +284,23 @@ public class EarMusicGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(157, 157, 157)
+                .addGap(179, 179, 179)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 11, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addGap(28, 28, 28)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -353,9 +364,38 @@ public class EarMusicGUI extends javax.swing.JFrame {
          
     }//GEN-LAST:event_submitBtActionPerformed
 
-    	protected void loadClientListModel(ArrayList<Client> list){
-		for(Client cl: list)
-			clientListModel.addElement(cl);
+    private void saveListBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveListBtActionPerformed
+        c.writeClientList();
+    }//GEN-LAST:event_saveListBtActionPerformed
+
+    private void loadListBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadListBtActionPerformed
+        c.getClientList();
+    }//GEN-LAST:event_loadListBtActionPerformed
+
+    private void clientListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_clientListValueChanged
+        //System.out.println("patient record selected.");
+		//patientDetailTxt.setText("blah blahs");
+		
+		// get the index of the selected record
+		int n = clientList.getSelectedIndex();
+		
+		/**
+		 * send the index of the record to the controller
+		 * getPatient method
+		 * get patient gets the record fro mthe arraylist
+		 * calculates the details, appends details to a string 
+		 * and return the string to the patient detail text area 
+		 * in the gui
+		 */
+                Client client = c.getClient(n);
+		clientDetailModel.setClient(client);
+    }//GEN-LAST:event_clientListValueChanged
+
+    protected void loadClientListModel(ArrayList<Client> list){
+                c.clear();
+		for(Client cl: list) {
+			c.addClient(cl);
+                }
 		
 		
 		c.loadListButtonClicked(list.get(list.size() - 1));
@@ -491,7 +531,9 @@ public class EarMusicGUI extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup4;
     private javax.swing.JButton clearBt;
     private javax.swing.JLabel clientDetailLabel;
+    private javax.swing.JTable clientDetailTable;
     private javax.swing.JLabel clientInformationLabel;
+    private javax.swing.JList<String> clientList;
     private javax.swing.JLabel firstNameLabel;
     private javax.swing.JTextField firstNameTxt;
     private javax.swing.JComboBox<String> headsetTypeCombo;
@@ -507,11 +549,9 @@ public class EarMusicGUI extends javax.swing.JFrame {
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JProgressBar jProgressBar3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSlider jSlider1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lastNameLabel;
     private javax.swing.JTextField lastNameTxt;
@@ -523,4 +563,9 @@ public class EarMusicGUI extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> wirelessTypeCombo;
     private javax.swing.JLabel wirelessTypeLabel;
     // End of variables declaration//GEN-END:variables
+
+    void addController(Controller controller) {
+        c = controller;
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

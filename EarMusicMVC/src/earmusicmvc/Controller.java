@@ -37,14 +37,8 @@ public class Controller {
     // Interface: IN: index of client in list
     // Returns: client detail: String
     // *****************************************************
-	 protected String getClient(int i){
-		 cl = clientList.get(i);
-		 
-		 String detail = "Client ID: " + cl.getId() + "\n";
-		 detail += "Brand Cost: " + cl.getBrandCost() + "\n";
-		 detail += "Total Cost: " + cl.getTotalCost() + "\n";
-		 
-		 return detail;
+	 protected Client getClient(int i){
+		 return clientList.get(i);
 	 } // end getClient
          
  	// ********** mutators **********
@@ -59,12 +53,20 @@ public class Controller {
 		 System.out.println("submit button clicked");
 		 
 		 cl = new Client(fn, ln, bt, ht, wt, mt);
-		 clientList.add(cl);
-		 ui.clientListModel.addElement(cl);
-		 // add client record to the list in gui
+                 addClient(cl);
 		 
 	 } // end submit button clicked
  
+         public void addClient(Client cl) {
+		 clientList.add(cl);
+		 ui.clientListModel.addElement(cl);
+		 // add client record to the list in gui
+         }
+         
+         public void clear() {
+                clientList.clear();
+                ui.clientListModel.removeAllElements();
+         }
     //*****************************************************
     // Purpose: register the view with the controller
     // Interface: IN: view object
@@ -90,7 +92,7 @@ public class Controller {
 			 oos.close();
 		 } // end try to open output object stream
 		 catch(IOException e){
-			 
+			 e.printStackTrace();
 		 } // end catch io exception
 		 
 	 } // end writeClientList
@@ -102,12 +104,13 @@ public class Controller {
     // Returns: none
     // *****************************************************
 	 protected void getClientList(){
+             ArrayList<Client> list = null;
 		 try{
 			 FileInputStream fis = new FileInputStream("client.tmp");
 			 ObjectInputStream ois = new ObjectInputStream(fis);
 			 
 			 try{
-				 clientList = (ArrayList<Client>)ois.readObject();
+				 list = (ArrayList<Client>)ois.readObject();
 			 } // end try to read client list from disk
 			 catch(ClassNotFoundException e){
 				 
@@ -117,7 +120,9 @@ public class Controller {
 			 
 		 } // end catch IOException
 		 
-		 ui.loadClientListModel(clientList);
+                 System.out.println(list!=null? list.size(): null);
+                 if (list!=null)
+                    ui.loadClientListModel(list);
 		 
 	 } // end getClientList
 	 

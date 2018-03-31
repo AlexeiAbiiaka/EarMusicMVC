@@ -14,12 +14,11 @@ package earmusicmvc;
 //  Output:		describe the result of your program
 // ***********************************************************************
 
-import javax.swing.*;
-import java.text.DecimalFormat;
+import java.io.Serializable;
 
-public class Client
+public class Client implements Serializable
  {  // begin class
- 	
+ 	static final long serialVersionUID = 1;
         private static int nextID = 1000;
     
  	// *********** class constants **********
@@ -41,6 +40,7 @@ public class Client
  	// ********** instance variable **********
         
         private String firstName;
+
         private String lastName;
         
         private int id = 0;    
@@ -183,7 +183,23 @@ public class Client
         return this.brandType + this.headsetType + this.microphoneType + this.wirelessType;
      } // end get total bill
      
-    // *****************************************************   
+    //*****************************************************
+    // Purpose: calculate and return the total cost
+    // Interface: IN: na
+    // Returns: total cost
+    // *****************************************************     
+    public String getFirstName() {
+        return firstName;
+    }
+    //*****************************************************
+    // Purpose: calculate and return the total cost
+    // Interface: IN: na
+    // Returns: total cost
+    // *****************************************************
+    public String getLastName() {
+        return lastName;
+    }
+     
      
     // ********** mutators **********
      
@@ -222,7 +238,24 @@ public class Client
      public void setMicrophoneType(char mt){
         microphoneType = mt;
      } // end set microphone type
-     
+    
+    //*****************************************************
+    // Purpose: calculate and return the total cost
+    // Interface: IN: na
+    // Returns: total cost
+    // ***************************************************** 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    //*****************************************************
+    // Purpose: calculate and return the total cost
+    // Interface: IN: na
+    // Returns: total cost
+    // *****************************************************
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     //*****************************************************
     // Purpose: set next id to last loaded client id + 1
     // Interface: IN: new next id number
