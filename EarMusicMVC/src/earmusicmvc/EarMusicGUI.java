@@ -7,6 +7,8 @@ package earmusicmvc;
 
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -101,11 +103,11 @@ public class EarMusicGUI extends javax.swing.JFrame {
 
         wirelessTypeLabel.setText("Wirelss Type:");
 
-        wirelessTypeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select One", "Wireless", "None Wireless" }));
+        wirelessTypeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select One", "Wireless", "Not Wireless" }));
 
         brandTypeLabel.setText("Brand Type: ");
 
-        brandTypeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select One", "Beats", "Bose", "JBL", "Skull Candy" }));
+        brandTypeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select One", "Beats", "Bose", "JBL", "SkullCandy" }));
         brandTypeCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 brandTypeComboActionPerformed(evt);
@@ -254,6 +256,11 @@ public class EarMusicGUI extends javax.swing.JFrame {
         jScrollPane3.setBackground(new java.awt.Color(255, 102, 0));
 
         clientDetailTable.setModel(clientDetailModel);
+        clientDetailTable.setGridColor(new java.awt.Color(255, 153, 0));
+        clientDetailTable.setShowGrid(true);
+        DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
+        leftRenderer.setHorizontalAlignment(JLabel.LEFT);
+        clientDetailTable.getColumnModel().getColumn(1).setCellRenderer(leftRenderer);
         jScrollPane3.setViewportView(clientDetailTable);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -417,24 +424,17 @@ public class EarMusicGUI extends javax.swing.JFrame {
         private char getBrandType(){
 		System.out.println("getBrandType open");
 		
-		char bt = 'X';		// temp brand type code
+		char bt = 'U';		// temp brand type code
 		
-		        if(brandTypeCombo.getSelectedItem().toString().equals("Beats")){
+		if(brandTypeCombo.getSelectedItem().toString().equals("Beats")){
 			        bt = 'B';
 		} // end if (Beats)
-		else{
-			if(brandTypeCombo.getSelectedItem().toString().equals("Bose"))
-				bt = 'O';
-                } // end if (Bose)
-                
-                        if(brandTypeCombo.getSelectedItem().toString().equals("JBL")){
+                else if(brandTypeCombo.getSelectedItem().toString().equals("Bose")) {
+				bt = 'A';
+                } else if(brandTypeCombo.getSelectedItem().toString().equals("JBL")){
 				bt = 'J';			
-		} // end else (JBL)
-                else{
-                        if(brandTypeCombo.getSelectedItem().toString().equals("Skull Candy"))
-                                bt = 'O';
-                else
-                                bt = 'D';			
+		} else if(brandTypeCombo.getSelectedItem().toString().equals("SkullCandy")) {
+                                bt = 'O';			
                 } // end else (Skull Candy)
 		return bt;
 	} // end getBrandTyoe
@@ -455,13 +455,13 @@ public class EarMusicGUI extends javax.swing.JFrame {
 	} // end getHeadsetType
 
 	private char getWirelessType(){
-		char wt = 'Z';
+		char wt = 'Q';
 		
 		    if(wirelessTypeCombo.getSelectedItem().toString().equalsIgnoreCase("Wireless"))
 			wt = 'W';
 		else
                     if(wirelessTypeCombo.getSelectedItem().toString().equalsIgnoreCase("Not Wireless"))
-			wt = 'N';
+			wt = 'K';
                 else
                         wt = 'P';
 		

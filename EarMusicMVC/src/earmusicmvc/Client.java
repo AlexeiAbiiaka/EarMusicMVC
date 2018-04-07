@@ -101,15 +101,31 @@ public class Client implements Serializable
          int headsetCost = 0;
          
          switch (headsetType) {
-             case 'I':
+             case 'H':
                  headsetCost = headphonesHeadset;
                  break;
-             default:
+             case 'E':
                  headsetCost = earbudsHeadset;
                  break;
          }
          return headsetCost;
      } // end get headset cost
+     
+         //*****************************************************
+    // Purpose: Show name on output
+    // Interface: IN: na
+    // Returns: headset name
+    // *****************************************************   
+     public String getHeadsetName(){
+         
+         switch (headsetType) {
+             case 'H':
+                 return "Headphones";
+             case 'E':
+                 return "Earbuds";
+         }
+         return "" + headsetType;
+     } // end get headset name
      
     //*****************************************************
     // Purpose: calculate and return the brand cost
@@ -120,21 +136,43 @@ public class Client implements Serializable
          int brandCost = 0;
          
          switch (brandType) {
-             case 'X':
+             case 'B':
                  brandCost = beatsRate;
                  break;
-             case 'N':
+             case 'A':
                  brandCost = boseRate;
                  break;
-             case 'V':
+             case 'J':
                  brandCost = jblRate;
                  break;
-             default:
-                 brandCost = boseRate;
+             case 'O':
+                 brandCost = skullCandyRate;
                  break;
          }
          return brandCost;
      } // end get brand cost
+     
+         //*****************************************************
+    // Purpose: Show name on output
+    // Interface: IN: na
+    // Returns: brand name
+    // *****************************************************   
+     public String getBrandName(){
+         
+         
+         switch (brandType) {
+             case 'B':
+                 return "Beats";
+             case 'A':
+                 return "Bose";
+             case 'J':
+                 return "JBL";
+             case 'O':
+                 return "SkullCandy";
+         }
+         return "" + brandType;
+     } // end get brand name
+     
      
     //*****************************************************
     // Purpose: calculate and return the cost of wireless
@@ -145,15 +183,31 @@ public class Client implements Serializable
          int wirelessCost = 0;
          
          switch (wirelessType) {
-             case 'I':
+             case 'W':
                  wirelessCost = wirelessRate;
                  break;
-             default:
+             case 'K':
                  wirelessCost = noneWirelessRate;
                  break;
          }
          return wirelessCost;
-     } // end get tv cost
+     } // end get wireless cost
+     
+         //*****************************************************
+    // Purpose: Show name on output
+    // Interface: IN: na
+    // Returns: wirless name
+    // *****************************************************   
+     public String getWirelessName(){
+         
+         switch (wirelessType) {
+             case 'W':
+                 return "Wireless";
+             case 'K':
+                 return "Not Wireless";
+         }
+         return "" + wirelessType;
+     } // end get wireless name
      
     //*****************************************************
     // Purpose: calculate and return the cost of microphone
@@ -164,15 +218,31 @@ public class Client implements Serializable
          int microphoneCost = 0;
          
          switch (microphoneType) {
-             case 'I':
+             case 'M':
                  microphoneCost = microphoneRate;
                  break;
-             default:
+             case 'N':
                  microphoneCost = noneMicrophoneRate;
                  break;
          }
          return microphoneCost;
-     } // end get phone cost
+     } // end get microphone cost
+     
+         //*****************************************************
+    // Purpose: show name in output
+    // Interface: IN: na
+    // Returns: microphone name
+    // *****************************************************   
+     public String getmicrophoneName(){
+         
+         switch (microphoneType) {
+             case 'M':
+                 return "Microphone";
+             case 'N':
+                 return "No Microphone";
+         }
+         return "" + microphoneType;
+     } // end get microphone name
      
     //*****************************************************
     // Purpose: calculate and return the total cost
@@ -181,7 +251,7 @@ public class Client implements Serializable
     // *****************************************************
      public int getTotalCost(){
         return this.brandType + this.headsetType + this.microphoneType + this.wirelessType;
-     } // end get total bill
+     } // end get total cost
      
     //*****************************************************
     // Purpose: calculate and return the total cost

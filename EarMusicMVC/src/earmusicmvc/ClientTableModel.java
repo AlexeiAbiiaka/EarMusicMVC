@@ -43,13 +43,13 @@ public class ClientTableModel extends AbstractTableModel {
                     case 2:
                         return client.getLastName();
                     case 3:
-                        return client.getBrandCost();
+                        return client.getBrandName() + ":" + " " + client.getBrandCost() ;
                     case 4:
-                        return client.getHeadsetCost();
+                        return client.getHeadsetName() + ":" + " " + client.getHeadsetCost();
                     case 5:
-                        return client.getWirelessCost();
+                        return client.getWirelessName() + ":" + " " + client.getWirelessCost();
                     case 6:
-                        return client.getmicrophoneCost();
+                        return client.getmicrophoneName() + ":" + " " + client.getmicrophoneCost();
                     case 7:
                         return client.getTotalCost();
                     default:

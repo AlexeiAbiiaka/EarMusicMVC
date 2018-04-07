@@ -64,7 +64,7 @@ public class Controller {
          }
          
          public void clear() {
-                clientList.clear();
+                //clientList.clear();
                 ui.clientListModel.removeAllElements();
          }
     //*****************************************************
@@ -120,7 +120,6 @@ public class Controller {
 			 
 		 } // end catch IOException
 		 
-                 System.out.println(list!=null? list.size(): null);
                  if (list!=null)
                     ui.loadClientListModel(list);
 		 
